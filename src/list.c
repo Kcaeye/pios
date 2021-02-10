@@ -4,9 +4,9 @@
 
 void list_add(struct Node* head, struct Node* elem){
 
-	Node* tmp = head;
+	struct Node* tmp = head;
 
-	while(tmp->next != null){
+	while(tmp->next != Null){
 		tmp = tmp->next;
 
 	}
@@ -14,7 +14,7 @@ void list_add(struct Node* head, struct Node* elem){
 	elem->prev = tmp;	
 
 
-
+}
 void list_remove(struct Node* head, struct Node* del){
 
 
