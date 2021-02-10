@@ -17,7 +17,14 @@ void list_add(struct Node* head, struct Node* elem){
 }
 void list_remove(struct Node* head, struct Node* del){
 
+	struct Node* tmp = head;
 
+	if(del->next == NULL){
+		del->prev->next = NULL;
+		}
+	if(del->prev == NULL){
+		tmp = NULL;
+		}
 	del->prev->next = del->next;
 	del->next->prev = del->prev;
 
