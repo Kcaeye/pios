@@ -1,0 +1,5 @@
+
+
+void putc(char data) {
+
+}
