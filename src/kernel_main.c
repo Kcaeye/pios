@@ -33,7 +33,7 @@ void kernel_main() {
 	//char *mu_io_reg = 0x7E215040;
 
 	//homeowork 5 - putc
-	//esp_printf(putc, "kernel main mem locale:  %x \n", kernel_main);
+	//esp_printf(putc, "kernel main mem locale: %x\n", kernel_main);
 
 	led_init();
     while(1){
