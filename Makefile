@@ -15,7 +15,6 @@ SDIR = src
 OBJS = \
 	boot.o \
 	kernel_main.o \
-	serial.o \
 	list.o \
 	gpio.o \
 	serial.o \
