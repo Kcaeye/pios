@@ -1,7 +1,10 @@
-
 #include <stdio.h>
 #include "list.h"
 #include "gpio.h"
+#include "rprintf.h"
+#include "serial.h"
+
+//void clear_bss();
 
 extern long __bss_start;
 extern long __bss_end;
@@ -29,6 +32,8 @@ void kernel_main() {
 	clear_bss();
 	//char *mu_io_reg = 0x7E215040;
 
+	//homeowork 5 - putc
+	//esp_printf(putc, "kernel main mem locale:  %x \n", kernel_main);
 
 	led_init();
     while(1){

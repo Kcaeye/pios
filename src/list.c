@@ -15,18 +15,24 @@ void list_add(struct Node* head, struct Node* elem){
 
 
 }
-void list_remove(struct Node* head, struct Node* del){
+void list_remove(struct Node* head, int data){
 
 	struct Node* tmp = head;
 
-	if(del->next == NULL){
-		del->prev->next = NULL;
+	if(head == null){
+		return;
+	}
+	if(tmp->data == data){
+		head = tmp->next;
+		return;
+	}
+	while(tmp->next){
+		if(data == tmp->data){
+			tmp->prev_next = tmp->next;
+			tmp = tmp->next;
+			continue;
 		}
-	if(del->prev == NULL){
-		tmp = NULL;
-		}
-	del->prev->next = del->next;
-	del->next->prev = del->prev;
-
+		tmp = tmp->next;
+			
 }
 
