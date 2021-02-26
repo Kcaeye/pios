@@ -15,9 +15,9 @@ int isdig(int c); // hand-implemented alternative to isdigit(), which uses a bun
 typedef char* charptr;
 typedef int (*func_ptr)(int c);
 
+///////////////////////////////////////////////////////////////////////////////
+////  Common Prototype functions
 /////////////////////////////////////////////////////////////////////////////////
-//////  Common Prototype functions
-///////////////////////////////////////////////////////////////////////////////////
 void esp_sprintf(char *buf, char *ctrl, ...);
 void esp_vprintf( const func_ptr f_ptr, charptr ctrl, va_list argp);
 void esp_printf( const func_ptr f_ptr, charptr ctrl, ...);
