@@ -25,27 +25,30 @@ static int num2;
 static char pad_character;
 
 size_t strlen(const char *str) {
-	    unsigned int len = 0;
-	        while(str[len] != '\0') {
-			        len++;
-				    }
-		    return len;
+    unsigned int len = 0;
+    while(str[len] != '\0') {
+        len++;
+    }
+    return len;
 }
 
 int tolower(int c) {
-	    if(c < 'a') { // Check if c is uppercase
-		            c -= 'a' - 'A';
-			        }
-	        return c;
+    if(c < 'a') { // Check if c is uppercase
+        c -= 'a' - 'A';
+    }
+    return c;
 }
 
 int isdig(int c) {
     if((c >= '0') && (c <= '9')){
-           return 1;
-        } else {
-	        return 0;
-	    }
+        return 1;
+    } else {
+        return 0;
+    }
 }
+
+
+
 
 /*---------------------------------------------------*/
 /*                                                   */
@@ -54,12 +57,12 @@ int isdig(int c) {
 /*                                                   */
 static void padding( const int l_flag)
 {
-	   int i;
+   int i;
 
-	      if (do_padding && l_flag && (len < num1))
-		            for (i=len; i<num1; i++)
-				              out_char( pad_character);
-	         }
+   if (do_padding && l_flag && (len < num1))
+      for (i=len; i<num1; i++)
+          out_char( pad_character);
+   }
 
 /*---------------------------------------------------*/
 /*                                                   */
@@ -68,20 +71,20 @@ static void padding( const int l_flag)
 /*                                                   */
 static void outs( charptr lp)
 {
-	   if(lp == NULL)
-		         lp = "(null)";
-	      /* pad on left if needed                          */
-	      len = strlen( lp);
-	         padding( !left_flag);
+   if(lp == NULL)
+      lp = "(null)";
+   /* pad on left if needed                          */
+   len = strlen( lp);
+   padding( !left_flag);
 
-		    /* Move string to the buffer                      */
-		    while (*lp && num2--)
-			          out_char( *lp++);
+   /* Move string to the buffer                      */
+   while (*lp && num2--)
+      out_char( *lp++);
 
-		       /* Pad on right if needed                         */
-		       len = strlen( lp);
-		          padding( left_flag);
-			     }
+   /* Pad on right if needed                         */
+   len = strlen( lp);
+   padding( left_flag);
+   }
 
 /*---------------------------------------------------*/
 /*                                                   */
@@ -90,36 +93,36 @@ static void outs( charptr lp)
 /*                                                   */
 static void outnum(unsigned int num, const int base)
 {
-	   charptr cp;
-	      int negative;
-	         char outbuf[32];
-		    const char digits[] = "0123456789ABCDEF";
+   charptr cp;
+   int negative;
+   char outbuf[32];
+   const char digits[] = "0123456789ABCDEF";
 
-		       /* Check if number is negative                    */
-		       /* NAK 2009-07-29 Negate the number only if it is not a hex value. */
-		       if (num < 0L && base != 16L) {
-			             negative = 1;
-				           num = -num;
-					         }
-		          else
-				        negative = 0;
+   /* Check if number is negative                    */
+   /* NAK 2009-07-29 Negate the number only if it is not a hex value. */
+   if (num < 0L && base != 16L) {
+      negative = 1;
+      num = -num;
+      }
+   else
+      negative = 0;
 
-			     /* Build number (backwards) in outbuf             */
-			     cp = outbuf;
-			        do {
-					      *cp++ = digits[num % base];
-					            } while ((num /= base) > 0);
-				   if (negative)
-					         *cp++ = '-';
-				   *cp-- = 0;
+   /* Build number (backwards) in outbuf             */
+   cp = outbuf;
+   do {
+      *cp++ = digits[num % base];
+      } while ((num /= base) > 0);
+   if (negative)
+      *cp++ = '-';
+   *cp-- = 0;
 
-				      /* Move the converted number to the buffer and    */
-				      /* add in the padding where needed.               */
-				      len = strlen(outbuf);
-				         padding( !left_flag);
-					    while (cp >= outbuf)
-						          out_char( *cp--);
-					       padding( left_flag);
+   /* Move the converted number to the buffer and    */
+   /* add in the padding where needed.               */
+   len = strlen(outbuf);
+   padding( !left_flag);
+   while (cp >= outbuf)
+      out_char( *cp--);
+   padding( left_flag);
 }
 
 /*---------------------------------------------------*/
@@ -127,18 +130,17 @@ static void outnum(unsigned int num, const int base)
 /* This routine gets a number from the format        */
 /* string.                                           */
 /*                                                   */
-
 static int getnum( charptr* linep)
 {
-	   int n;
-	      charptr cp;
+   int n;
+   charptr cp;
 
-	         n = 0;
-		    cp = *linep;
-		       while (isdig((int)*cp))
-			  n = n*10 + ((*cp++) - '0');
-		          *linep = cp;
-			     return(n);
+   n = 0;
+   cp = *linep;
+   while (isdig((int)*cp))
+      n = n*10 + ((*cp++) - '0');
+   *linep = cp;
+   return(n);
 }
 
 /*---------------------------------------------------*/
@@ -156,125 +158,126 @@ static int getnum( charptr* linep)
 
 void esp_printf( const func_ptr f_ptr, charptr ctrl, ...)
 {
-	  va_list args;
-	    va_start(args, *ctrl);
-	      esp_vprintf(f_ptr, ctrl, args);
-	        va_end( args );
-		  
+  va_list args;
+  va_start(args, *ctrl);
+  esp_vprintf(f_ptr, ctrl, args);
+  va_end( args );
+  
 }
 
 void esp_vprintf( const func_ptr f_ptr, charptr ctrl, va_list argp)
 {
 
-	   int long_flag;
-	      int dot_flag;
+   int long_flag;
+   int dot_flag;
+
    char ch;
    //va_list argp;
-   
+
    //va_start( argp, ctrl);
    out_char = f_ptr;
 
-      for ( ; *ctrl; ctrl++) {
+   for ( ; *ctrl; ctrl++) {
 
-	            /* move format string chars to buffer until a  */
-	            /* format control is found.                    */
-	            if (*ctrl != '%') {
-			             out_char(*ctrl);
-				              continue;
-					               }
+      /* move format string chars to buffer until a  */
+      /* format control is found.                    */
+      if (*ctrl != '%') {
+         out_char(*ctrl);
+         continue;
+         }
 
-		          /* initialize all the flags for this format.   */
-		          dot_flag   =
-				        long_flag  =
-					      left_flag  =
-					            do_padding = 0;
-			        pad_character = ' ';
-				      num2=32767;
+      /* initialize all the flags for this format.   */
+      dot_flag   =
+      long_flag  =
+      left_flag  =
+      do_padding = 0;
+      pad_character = ' ';
+      num2=32767;
 
-	try_next:
-				            ch = *(++ctrl);
+try_next:
+      ch = *(++ctrl);
 
-					          if (isdig((int)ch)) {
-							           if (dot_flag)
-									               num2 = getnum(&ctrl);
-								            else {
-										                if (ch == '0')
-													               pad_character = '0';
+      if (isdig((int)ch)) {
+         if (dot_flag)
+            num2 = getnum(&ctrl);
+         else {
+            if (ch == '0')
+               pad_character = '0';
 
-												            num1 = getnum(&ctrl);
-													                do_padding = 1;
-															         }
-									             ctrl--;
-										              goto try_next;
-											            }
-	switch (tolower((int)ch)) {
-		         case '%':
-				               out_char( '%');
-					                     continue;
+            num1 = getnum(&ctrl);
+            do_padding = 1;
+         }
+         ctrl--;
+         goto try_next;
+      }
 
-							              case '-':
-							                   left_flag = 1;
-									                 break;
+      switch (tolower((int)ch)) {
+         case '%':
+              out_char( '%');
+              continue;
 
-											          case '.':
-											               dot_flag = 1;
-												                     break;
+         case '-':
+              left_flag = 1;
+              break;
 
-														              case 'l':
-														                   long_flag = 1;
-																                 break;
-																		 	
-																		          case 'i':
-																		          case 'd':
-																		               if (long_flag || ch == 'D') {
-																				                        outnum( va_arg(argp, long), 10L);
-																							                 continue;
-																									                  }
-																			                     else {
-																						                      outnum( va_arg(argp, int), 10L);
-																								                       continue;
-																										                        }
-																					              case 'x':
-																					                   outnum( (long)va_arg(argp, int), 16L);
-																							                 continue;
+         case '.':
+              dot_flag = 1;
+              break;
 
-																									          case 's':
-																									               outs( va_arg( argp, charptr));
-																										                     continue;
+         case 'l':
+              long_flag = 1;
+              break;
+	
+         case 'i':
+         case 'd':
+              if (long_flag || ch == 'D') {
+                 outnum( va_arg(argp, long), 10L);
+                 continue;
+                 }
+              else {
+                 outnum( va_arg(argp, int), 10L);
+                 continue;
+                 }
+         case 'x':
+              outnum( (long)va_arg(argp, int), 16L);
+              continue;
 
-																												              case 'c':
-																												                   out_char( va_arg( argp, int));
-																														                 continue;
+         case 's':
+              outs( va_arg( argp, charptr));
+              continue;
 
-																																          case '\\':
-																																               switch (*ctrl) {
-																																		                        case 'a':
-																																						                      out_char( 0x07);
-																																								                            break;
-																																											                     case 'h':
-																																											                          out_char( 0x08);
-																																														                        break;
-																																																	                 case 'r':
-																																																	                      out_char( 0x0D);
-																																																			                            break;
-																																																						                     case 'n':
-																																																						                          out_char( 0x0D);
-																																																									                        out_char( 0x0A);
-																																																												                      break;
-																																																														                       default:
-																																																														                            out_char( *ctrl);
-																																																																	                          break;
-																																																																				                   }
-																																	                     ctrl++;
-																																			                   break;
+         case 'c':
+              out_char( va_arg( argp, int));
+              continue;
 
-																																					            default:
-																																					                 continue;
-																																							          }
-	      goto try_next;
-	            }
-         va_end( argp);
-	    }
+         case '\\':
+              switch (*ctrl) {
+                 case 'a':
+                      out_char( 0x07);
+                      break;
+                 case 'h':
+                      out_char( 0x08);
+                      break;
+                 case 'r':
+                      out_char( 0x0D);
+                      break;
+                 case 'n':
+                      out_char( 0x0D);
+                      out_char( 0x0A);
+                      break;
+                 default:
+                      out_char( *ctrl);
+                      break;
+                 }
+              ctrl++;
+              break;
+
+         default:
+              continue;
+         }
+      goto try_next;
+      }
+   va_end( argp);
+   }
 
 /*---------------------------------------------------*/
-
